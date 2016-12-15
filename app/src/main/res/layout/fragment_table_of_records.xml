@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Table_of_records"
+                android:layout_gravity="center"
+                android:textIsSelectable="false"
+                android:textSize="30sp"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="25dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tableOfRecordsBackImageButton"
+                android:background="@android:drawable/ic_menu_revert"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="10dp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"></LinearLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="top|center">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:stretchColumns="*"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/records_tablelayout">
+
+                    <include
+                        layout="@layout/title_table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/table_of_records_row"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+
+
+                </TableLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"></LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
