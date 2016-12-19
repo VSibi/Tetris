@@ -551,38 +551,7 @@ public class GameLogic {
         }
     }
 
-    public void readFromTableOfRecords() {
-
-        // делаем запрос всех данных из таблицы records, получаем Cursor
-        Cursor c = mDatabase.query(RecordsTable.NAME, null, null, null, null, null, null);
-
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
-
-        String s;
-        if (c.moveToFirst()) {
-
-            // определяем номера столбцов по имени в выборке
-            int idColIndex = c.getColumnIndex("_id");
-            int nickNameColIndex = c.getColumnIndex(RecordsTable.Cols.NICKNAME);
-            int scoreColIndex = c.getColumnIndex(RecordsTable.Cols.SCORE);
-
-
-            do {
-                // получаем значения по номерам столбцов
-                s = "ID = " + c.getInt(idColIndex) +
-                                ", NickName = " + c.getString(nickNameColIndex) +
-                                ", Score = " + c.getInt(scoreColIndex);
-                // переход на следующую строку
-                // а если следующей нет (текущая - последняя), то false - выходим из цикла
-            } while (c.moveToNext());
-        } else s = "empty";
-
-        c.close();
-
-
-    }
-
+    
     public void deleteAllRowsInTableOfRecords() {
         mDatabase.delete(RecordsTable.NAME, null, null);
     }
