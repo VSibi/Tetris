@@ -5,10 +5,10 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 
 /**
  * Created by Sibic_000 on 10.10.2016.
@@ -31,22 +32,29 @@ public class JSONSerializer {
         mFilename = f;
     }
 
-    public void saveGameField(int [][] gameField) throws JSONException,IOException {
+    public void saveGameField(int [][] fixedBlocks, ArrayList<GameMap.FallenFigure> figures) throws JSONException,IOException {
+
+        JSONObject mapRoot = new JSONObject();
 
         // Построение массива в JSON
-        JSONArray array = new JSONArray();
-        for (int i = 0; i < gameField.length; i++) {
-            for (int j = 0; j < gameField[i].length; j++) {
-                array.put(gameField[i][j]);
+        // поле
+        JSONArray fieldArray = mapRoot.optJSONArray("field");
+        for (int i = 0; i < fixedBlocks.length; i++)
+        {
+            for (int j = 0; j < fixedBlocks[i].length; j++)
+            {
+                fieldArray.put(fixedBlocks[i][j]);
             }
         }
+
+        //JSONObject figureArray = mapRoot.optJSONArray("figures");
 
         // Запись файла на диск
         Writer writer = null;
         try {
             OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
-            writer.write(array.toString());
+            writer.write(mapRoot.toString());
         } finally {
             if (writer != null) writer.close();
         }

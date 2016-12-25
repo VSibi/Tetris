@@ -8,77 +8,26 @@ import android.graphics.Point;
 
 public class Figure_T extends Figure{
 
-    private Point mCoord1 = new Point();
-    private Point mCoord2 = new Point();
-    private Point mCoord3 = new Point();
-    private String mStateOfRotation;
-
-
-    private Point [] mAllCoord = {
-           mCoord1, mCoord2, mCoord3, super.getBasicPoint()
+    private static Point [] sLocalCoord = {
+            new Point(0, 0),
+            new Point(-1, -1),
+            new Point(0, -1),
+            new Point(1, -1)
     };
 
-    public Figure_T() {
-        super.setBasicPoint(super.getBasicPoint().x + 1, super.getBasicPoint().y + 1);
-        mCoord1.set(super.getBasicPoint().x - 1, super.getBasicPoint().y - 1);
-        mCoord2.set(super.getBasicPoint().x, super.getBasicPoint().y - 1);
-        mCoord3.set(super.getBasicPoint().x + 1, (super.getBasicPoint().y - 1));
-        mStateOfRotation = "Normal";
+    private static Matrix3.RotationDegree[] sAvailableOrientations = {
+            Matrix3.RotationDegree.DEGREE_0,
+            Matrix3.RotationDegree.DEGREE_90,
+            Matrix3.RotationDegree.DEGREE_180,
+            Matrix3.RotationDegree.DEGREE_270
+    };
+
+    public Figure_T() {}
+
+    public Point[] genStartLocalCoord() {
+        return sLocalCoord.clone();
     }
 
-
-    public void setTranslate(int x, int y) {
-        for (int i = 0; i < mAllCoord.length; i++) {
-            mAllCoord[i].x = mAllCoord[i].x + x;
-            mAllCoord[i].y = mAllCoord[i].y + y;
-        }
-    }
-
-    public void setPosition(int x, int y) {
-        super.setBasicPoint(x + 1, y + 1);
-        mCoord1.set(super.getBasicPoint().x - 1, super.getBasicPoint().y - 1);
-        mCoord2.set(super.getBasicPoint().x, super.getBasicPoint().y - 1);
-        mCoord3.set(super.getBasicPoint().x + 1, (super.getBasicPoint().y - 1));
-    }
-
-    public String getStateOfRotation() {
-        return mStateOfRotation;
-    }
-
-    public void rotate() {
-        switch (mStateOfRotation) {
-            case "Normal":
-                mCoord1.set(super.getBasicPoint().x, super.getBasicPoint().y - 2);
-                mCoord2.set(super.getBasicPoint().x - 1, super.getBasicPoint().y - 1);
-                mCoord3.set(super.getBasicPoint().x, (super.getBasicPoint().y - 1));
-                mStateOfRotation = "Rotate_90_degrees";
-                break;
-            case "Rotate_90_degrees" :
-                super.setBasicPoint(super.getBasicPoint().x + 1, super.getBasicPoint().y - 1);
-                mCoord1.set(super.getBasicPoint().x - 1, super.getBasicPoint().y - 1);
-                mCoord2.set(super.getBasicPoint().x - 2, super.getBasicPoint().y);
-                mCoord3.set(super.getBasicPoint().x - 1, (super.getBasicPoint().y));
-                mStateOfRotation = "Rotate_180_degrees";
-                break;
-            case "Rotate_180_degrees" :
-                super.setBasicPoint(super.getBasicPoint().x - 1, super.getBasicPoint().y + 1);
-                mCoord1.set(super.getBasicPoint().x, super.getBasicPoint().y - 2);
-                mCoord2.set(super.getBasicPoint().x, super.getBasicPoint().y - 1);
-                mCoord3.set(super.getBasicPoint().x + 1, (super.getBasicPoint().y - 1));
-                mStateOfRotation = "Rotate_270_degrees";
-                break;
-            case "Rotate_270_degrees" :
-                mCoord1.set(super.getBasicPoint().x - 1, super.getBasicPoint().y - 1);
-             /*   mCoord2.set(super.getBasicPoint().x + 1, super.getBasicPoint().y);
-                mCoord3.set(super.getBasicPoint().x, (super.getBasicPoint().y + 1));*/
-                mStateOfRotation = "Normal";
-                break;
-        }
-    }
-
-    public Point[] getAllCoord() {
-        return mAllCoord;
-    }
-
+    public Matrix3.RotationDegree[] getAvailableOrientations() { return sAvailableOrientations; }
 
 }

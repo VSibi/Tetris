@@ -91,7 +91,7 @@ public class GameUIFragment extends Fragment {
         mSpeedMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mGameLogic.speedMin();
+                mGameLogic.speedMinus();
             }
         });
 
@@ -140,10 +140,10 @@ public class GameUIFragment extends Fragment {
                             if (Math.abs(resultX) > 20) {
                                 isMoveDown = false;
                                 if (resultX < 0) {
-                                    mGameLogic.moveFigureLeft(mGameLogic.getCurrFigure());
+                                    mGameLogic.moveFigureLeft();
                                     draw();
                                 } else {
-                                    mGameLogic.moveFigureRight(mGameLogic.getCurrFigure());
+                                    mGameLogic.moveFigureRight();
                                     draw();
                                 }
                             }
@@ -155,7 +155,7 @@ public class GameUIFragment extends Fragment {
                     case MotionEvent.ACTION_UP:
 
                         if (!isMove) {
-                            mGameLogic.rotateFigure(mGameLogic.getCurrFigure());
+                            mGameLogic.rotateFigure();
                             draw();
                         }
 
@@ -166,7 +166,8 @@ public class GameUIFragment extends Fragment {
                             if (resultY != 0) {
                                 if (Math.abs(resultY) > 30) {
                                     if (resultY > 0) {
-                                        mGameLogic.quickFallDownFigure(mGameLogic.getCurrFigure());
+                                        // TODO
+                                        //mGameLogic.quickFallDownFigure(mGameLogic.getCurrFigure());
                                         draw();
                                     }
                                 }
@@ -341,7 +342,8 @@ public class GameUIFragment extends Fragment {
         edit.apply();
 
         try {
-            mJSONSerializer.saveGameField(mGameLogic.getFixedBlocks());
+            //mJSONSerializer.saveGameField(GameLogic.getFixedBlocks(),
+            //        GameLogic.getFallenFigureList());
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
         }catch (Exception e) {
             Toast.makeText(getActivity(), "Error SAVE file", Toast.LENGTH_SHORT).show();
@@ -368,7 +370,8 @@ public class GameUIFragment extends Fragment {
         mGameLogic.setSpeed(sharedPreferences.getInt("Speed", 1));
 
         try {
-            mGameLogic.setFixedBlocks(mJSONSerializer.loadGameField());
+            //TODO
+            //mGameLogic.setFixedBlocks(mJSONSerializer.loadGameField());
 
             Toast.makeText(getActivity(), "LOAD IS OK!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
             return true;

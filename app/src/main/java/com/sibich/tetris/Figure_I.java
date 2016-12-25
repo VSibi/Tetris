@@ -5,6 +5,8 @@ package com.sibich.tetris;
  */
 import android.graphics.Point;
 
+import java.lang.reflect.Array;
+
 
 public class Figure_I extends Figure
 {
@@ -24,8 +26,8 @@ public class Figure_I extends Figure
 
     public Figure_I() { }
 
-    public Point[] getLocalCoord() {
-        return sLocalCoord;
+    public Point[] genStartLocalCoord() {
+        return sLocalCoord.clone();
     }
     public Matrix3.RotationDegree[] getAvailableOrientations() { return sAvailableOrientations; }
 }

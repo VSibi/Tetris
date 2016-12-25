@@ -15,18 +15,18 @@ public final class Matrix3
         DEGREE_0, DEGREE_90, DEGREE_180, DEGREE_270
     }
 
-    private Matrix3f matr = new Matrix3f();
+    private float[][] matr = new float[3][3];
 
     public float get(int row, int column)
     {
         assert row >= 0 && row < 3 && column >= 0 && column < 3;
-        return matr.get(row, column);
+        return matr[row][column];
     }
 
     public void set(int row, int column, float value)
     {
         assert row >= 0 && row < 3 && column >= 0 && column < 3;
-        matr.set(row, column, value);
+        matr[row][column] = value;
     }
 
     public Point mul(Point p)
@@ -43,11 +43,11 @@ public final class Matrix3
 
     public Matrix3 mul(Matrix3 m)
     {
-        Matrix3 ret = new Matrix3();
-        ret.matr.loadMultiply(matr, m.matr);
-        return ret;
+        //Matrix3 ret = new Matrix3();
+        //ret.matr.loadMultiply(matr, m.matr);
+        //return ret;
 
-        /*Matrix3 ret = new Matrix3();
+        Matrix3 ret = new Matrix3();
 
         // 1st row
         ret.set(0, 0, get(0, 0) * m.get(0,0) + get(0, 1) * m.get(0, 1) + get(0, 2) * m.get(0, 2));
@@ -64,7 +64,7 @@ public final class Matrix3
         ret.set(2, 1, get(0, 2) * m.get(0,1) + get(1, 0) * m.get(0, 2) + get(1, 1) * m.get(1, 0));
         ret.set(2, 2, get(0, 2) * m.get(0,2) + get(1, 0) * m.get(1, 0) + get(1, 1) * m.get(1, 1));
 
-        return ret;*/
+        return ret;
     }
 
     public static Matrix3 rotate(RotationDegree degree)
@@ -90,11 +90,11 @@ public final class Matrix3
                 break;
         }
 
-        Matrix3 ret = new Matrix3();
-        ret.matr.loadRotate((float)radians);
-        return ret;
+        //Matrix3 ret = new Matrix3();
+        //ret.matr.loadRotate((float)radians);
+        //return ret;
 
-        /*
+
         float sin = (float)(Math.sin(radians));
         float cos = (float)(Math.cos(radians));
 
@@ -114,29 +114,30 @@ public final class Matrix3
         ret.set(2, 2, 1.0f);
 
         return ret;
-        */
+
     }
 
     public static Matrix3 translate(int x, int y)
     {
-        Matrix3 ret = new Matrix3();
-        ret.matr.loadTranslate(x, y);
-        return ret;
+        //Matrix3 ret = new Matrix3();
+        //ret.matr.loadTranslate(x, y);
+        //return ret;
 
-        /*
+
         Matrix3 ret = new Matrix3();
 
-        ret.set(0, 0, 0.0f);
+        ret.set(0, 0, 1.0f);
         ret.set(0, 1, 0.0f);
         ret.set(0, 2, (float)x);
 
         ret.set(1, 0, 0.0f);
-        ret.set(1, 1, 0.0f);
+        ret.set(1, 1, 1.0f);
         ret.set(1, 2, (float)y);
 
         ret.set(2, 0, 0.0f);
         ret.set(2, 1, 0.0f);
         ret.set(2, 2, 1.0f);
-        */
+
+        return ret;
     }
 }
