@@ -2,15 +2,8 @@ package com.sibich.tetris;
 
 import android.graphics.Point;
 
-import com.sibich.tetris.BuildConfig;
-import com.sibich.tetris.Figure;
-import com.sibich.tetris.Figure_I;
-import com.sibich.tetris.Figure_SQ;
-import com.sibich.tetris.Figure_S_Left;
-import com.sibich.tetris.Figure_T;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -30,9 +23,10 @@ public class GameMap
 
     private Figure mNextFigure = null;
     private int[][] mNextFigureField = new int[4][4];
+    private int mNextFigureIndx = 0;
 
     private Figure[] mAvailableFigures = {new Figure_I(), new Figure_S_Left(),
-            new Figure_SQ(), new Figure_T()};
+            new Figure_SQ()/*, new Figure_T()*/};
     private Random mRandom = new Random();
 
     private int[][] mFixedBlocks = new int[sMapWidth][sMapHeight]; // содержат индексы зафиксированных фигур
@@ -79,8 +73,8 @@ public class GameMap
 
                 for(int j = 0; j < points2.length; j++)
                 {
-                    int x2 = points2[i].x;
-                    int y2 = points2[i].y;
+                    int x2 = points2[j].x;
+                    int y2 = points2[j].y;
 
                     if(x1 == x2)
                     {
@@ -108,7 +102,7 @@ public class GameMap
                 }
             }
 
-            return compare_result;
+            return compare_result;/* * -1;*/
         }
     };
 
@@ -118,14 +112,14 @@ public class GameMap
         genNextFigure();
     }
 
-    public int[][] getFixedField() {return mFixedBlocks;}
+    public int[][] getFixedField() {return cloneField(mFixedBlocks);}
 
     // returns blocks grouped by indices
     // index should be used to externally generate colors;
     // -1 is empty cell;
     public int[][] getDrawableField()
     {
-        int[][] field = mFixedBlocks.clone();
+        int[][] field = cloneField(mFixedBlocks);
 
         if(mCurrentFigure != null)
         {
@@ -144,7 +138,7 @@ public class GameMap
     // -1 is empty cell
     public int[][] getNextFigureDrawableField()
     {
-        return mNextFigureField;
+        return cloneField(mNextFigureField);
     }
 
     public boolean isGameOver()
@@ -154,12 +148,14 @@ public class GameMap
 
     public void simulateStep()
     {
-        Assert(!mGameOver);
+        Debug.Assert(!mGameOver);
 
         if(mInLinesConstruction)
         {
-            mInLinesConstruction = simulateFallenFigures();
-            mInLinesConstruction = mInLinesConstruction || removeFullLines();
+            boolean somethingFalled = simulateFallenFigures();
+            mInLinesConstruction = somethingFalled;
+            if(!somethingFalled)
+                mInLinesConstruction = removeFullLines();
             return;
         }
 
@@ -169,7 +165,7 @@ public class GameMap
         }
 
         Figure transformedFigure = mCurrentFigure.clone();
-        transformedFigure.translate(0, -1);
+        transformedFigure.translate(0, 1);
 
         if(checkIntersection(transformedFigure, -1))
         {
@@ -191,6 +187,9 @@ public class GameMap
 
     public void moveFigureLeft()
     {
+        if(mCurrentFigure == null)
+            return;
+
         Figure transformedFigure = mCurrentFigure.clone();
         transformedFigure.translate(-1, 0);
         if(!checkIntersection(transformedFigure, -1))
@@ -199,6 +198,9 @@ public class GameMap
 
     public void moveFigureRight()
     {
+        if(mCurrentFigure == null)
+            return;
+
         Figure transformedFigure = mCurrentFigure.clone();
         transformedFigure.translate(1, 0);
         if(!checkIntersection(transformedFigure, -1))
@@ -207,6 +209,9 @@ public class GameMap
 
     public void rotateFigure()
     {
+        if(mCurrentFigure == null)
+            return;
+
         Figure transformedFigure = mCurrentFigure.clone();
         transformedFigure.rotate();
         if(!checkIntersection(transformedFigure, -1))
@@ -223,13 +228,13 @@ public class GameMap
     {
         boolean somethingFalledDown = false;
 
-        mFallenFigures.sort(FallenFigureComparator);
+        Collections.sort(mFallenFigures, FallenFigureComparator);
 
         for(int i = 0 ; i < mFallenFigures.size(); i++)
         {
             FallenFigure ff = mFallenFigures.get(i);
             Figure fig = ff.mFigure.clone();
-            fig.translate(0, -1);
+            fig.translate(0, 1);
             if(!checkIntersection(fig, ff.mIndx))
             {
                 ff.mFigure = fig;
@@ -243,6 +248,8 @@ public class GameMap
 
     private void throwNextFigure()
     {
+        Debug.Log("Map: throwNextFigure()");
+
         Point[] localBB = mNextFigure.getLocalBoundingBox();
         int width = localBB[0].x - localBB[1].x;
         int pos_x = (sMapWidth - width) / 2 - localBB[0].x;
@@ -250,13 +257,17 @@ public class GameMap
         mNextFigure.setPosition(pos_x, pos_y);
 
         mCurrentFigure = mNextFigure;
-        mCurrentFigureIndx++;
+        mCurrentFigureIndx = mNextFigureIndx;
 
         genNextFigure();
     }
 
     private void genNextFigure()
     {
+        Debug.Log("Map: genNextFigure()");
+
+        mNextFigureIndx = genFigureIndx();
+
         int indx = mRandom.nextInt(mAvailableFigures.length);
         mNextFigure = mAvailableFigures[indx];
 
@@ -267,7 +278,7 @@ public class GameMap
         int size_x = bb[1].x - bb[0].x;
         int size_y = bb[1].y - bb[0].y;
 
-        Assert(size_x <= 4 && size_y <= 4);
+        Debug.Assert(size_x <= 4 && size_y <= 4);
 
         for(int i = 0; i < 4; i++)
         {
@@ -281,31 +292,33 @@ public class GameMap
         for(int i = 0; i < figureLocalPoints.length; i++)
         {
             Point p = figureLocalPoints[i];
-            mNextFigureField[p.x][p.y] = mCurrentFigureIndx + 1;
+            mNextFigureField[p.x + offset_x][p.y + offset_y] = mCurrentFigureIndx + 1;
         }
     }
 
     private void fixCurrentFigure()
     {
+        Debug.Log("Map: fixCurrentFigure()");
         mFallenFigures.add(new FallenFigure(mCurrentFigureIndx, mCurrentFigure));
         UpdateField();
     }
 
     private boolean removeFullLines()
     {
+        Debug.Log("Map: removeFullLines()");
+
         boolean lineRemoved = false;
 
-        for(int y = 0; y < sMapHeight; y++)
+        for(int y = sMapHeight - 1; y >= 0; y--)
         {
             boolean lineIsFull = true;
             boolean lineIsEmpty = true;
 
             for(int x = 0; x < sMapWidth; x++)
             {
-                if(mFixedBlocks[x][y] == 0)
+                if(mFixedBlocks[x][y] == -1)
                 {
                     lineIsFull = false;
-                    break;
                 }
                 else
                 {
@@ -327,6 +340,8 @@ public class GameMap
 
     private void removeBlock(int x, int y)
     {
+        Debug.Log("Map: removeBlock(" + x + ", " + y + ")");
+
         int figureIndx = mFixedBlocks[x][y];
         for(int i = 0; i < mFallenFigures.size(); i++)
         {
@@ -334,16 +349,34 @@ public class GameMap
             if(ff.mIndx == figureIndx)
             {
                 ff.mFigure.removeGlobalCoord(x, y);
+                mFixedBlocks[x][y] = -1;
+                if(ff.mFigure.empty())
+                    mFallenFigures.remove(i);
+                else if(!ff.mFigure.checkIntegrity())
+                {
+                    Debug.Log("Map: breaking figure #" + ff.mIndx);
+                    ArrayList<BrokenFigure> newFigures = ff.mFigure.breakFigure();
+                    mFallenFigures.remove(i);
+                    for(Figure brokenFigure : newFigures)
+                    {
+                        mFallenFigures.add(new FallenFigure(genFigureIndx(), brokenFigure));
+                    }
+                    UpdateField();
+                }
+
                 return;
             }
         }
 
-        Assert(false);
+        Debug.Log("Map: removeBlock() error: figure #" + mFixedBlocks[x][y] + " not found!");
+        Debug.Assert(false);
     }
 
     private void removeLine(int lineIndx)
     {
-        Assert(lineIndx >= 0 && lineIndx < sMapHeight);
+        Debug.Assert(lineIndx >= 0 && lineIndx < sMapHeight);
+
+        Debug.Log("Map: removeLine (" + lineIndx + ")");
 
         for(int x = 0; x < sMapWidth; x++)
         {
@@ -386,24 +419,44 @@ public class GameMap
     {
         // check map bounds
         Point[] bb = figure.getTransformedBoundingBox();
-        if(bb[0].x < 0 || bb[1].x > sMapWidth || bb[1].y > sMapHeight)
+        if(bb[0].x < 0 || bb[1].x >= sMapWidth || bb[1].y >= sMapHeight)
+        {
+            Debug.Log("Map: collision");
             return true;
+        }
 
         //check if figure points intersect with fixed blocks
         Point[] figurePoints = figure.getTransformedCoord();
         for(int i = 0; i < figurePoints.length; i++)
         {
             Point p = figurePoints[i];
-            if(mFixedBlocks[p.x][p.y] != -1 && mFixedBlocks[p.x][p.y] != additionalIgnoreIndx)
+            if(p.y < 0) // только что брошенная фигура может находиться за пределами игрового поля)
+                continue;
+
+            if(mFixedBlocks[p.x][p.y] != -1 && mFixedBlocks[p.x][p.y] != additionalIgnoreIndx) {
+                Debug.Log("Map: collision");
                 return true;
+            }
         }
 
         return false;
     }
 
-    private void Assert(boolean assertion)
+    private static int[][] cloneField(int[][] array)
     {
-        if(BuildConfig.DEBUG && !assertion)
-            throw new AssertionError();
+        int[][] ret = new int[array.length][array[0].length];
+        for(int i = 0; i < array.length; i++)
+        {
+            ret[i] = array[i].clone();
+        }
+        return ret;
+    }
+
+    private int mFigureIndexCount = 0;
+    private int genFigureIndx()
+    {
+        int indx = mFigureIndexCount;
+        mFigureIndexCount++;
+        return indx;
     }
 }

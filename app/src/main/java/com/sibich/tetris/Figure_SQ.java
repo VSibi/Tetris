@@ -19,6 +19,7 @@ public class Figure_SQ extends Figure {
     };
 
     public Figure_SQ() {
+        setLocalCoords(genStartLocalCoord());
     }
 
     public Matrix3.RotationDegree[] getAvailableOrientations()

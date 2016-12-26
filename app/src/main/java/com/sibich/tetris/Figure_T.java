@@ -22,7 +22,10 @@ public class Figure_T extends Figure{
             Matrix3.RotationDegree.DEGREE_270
     };
 
-    public Figure_T() {}
+    public Figure_T()
+    {
+        setLocalCoords(genStartLocalCoord());
+    }
 
     public Point[] genStartLocalCoord() {
         return sLocalCoord.clone();

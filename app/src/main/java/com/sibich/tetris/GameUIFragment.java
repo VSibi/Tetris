@@ -122,6 +122,7 @@ public class GameUIFragment extends Fragment {
             boolean isMove = true, isMoveDown = true;
             float startPointX = 0, endPointX = 0;
             float startPointY = 0, endPointY = 0;
+            float moveTreshold = 4.0f;
             float resultX = 0, resultY = 0;
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -132,11 +133,14 @@ public class GameUIFragment extends Fragment {
                         isMove = false;
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        isMove = true;
+                        // move action is called iven on just tap on my device
+                        // isMove = true;
                         endPointX = motionEvent.getX();
                         resultX = endPointX - startPointX;
+                        Debug.Log("ACTION_MOVE, x: " + resultX);
 
-                        if (resultX != 0) {
+                        if (Math.abs(resultX) >= moveTreshold) {
+                            isMove = true;
                             if (Math.abs(resultX) > 20) {
                                 isMoveDown = false;
                                 if (resultX < 0) {
@@ -188,7 +192,7 @@ public class GameUIFragment extends Fragment {
             Toast.makeText(getActivity(), "EXIST SAVE GAME!", Toast.LENGTH_SHORT).show();
         }
         else {
-            loadGame();
+            newGame();
             startGame();
         }
 
@@ -454,40 +458,26 @@ public class GameUIFragment extends Fragment {
             }
         }
 
+        int[] colors = {R.color.green, R.color.yellow, R.color.blue, R.color.purple};
+
         for (int i = 0; i < mNextFigureTableLayout.getChildCount(); i++) {
             TableRow row = (TableRow) mNextFigureTableLayout.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 ImageView imageview = (ImageView) row.getChildAt(j);
-                switch (mNextFigureGameField[i][j]) {
-                    case 0:
-                        imageview.setVisibility(View.INVISIBLE);
-                        break;
-                    case R.color.green:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.green);
-                        break;
-                    case R.color.yellow:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.yellow);
-                        break;
-                    case R.color.blue:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.blue);
-                        break;
-                    case R.color.purple:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.purple);
-                        break;
-                    default:
-                        imageview.setVisibility(View.INVISIBLE);
-                        break;
+                if(mNextFigureGameField[i][j] == -1)
+                    imageview.setVisibility(View.INVISIBLE);
+                else
+                {
+                    int colorIndx = mNextFigureGameField[i][j] % colors.length;
+                    imageview.setVisibility(View.VISIBLE);
+                    imageview.setBackgroundResource(colors[colorIndx]);
                 }
             }
         }
 
         for (int i = 0; i < mGameField.length; i++) {
             for (int j = 0; j < mGameField[i].length; j++) {
-                mGameField[i][j] = mGameLogic.getGameField()[i][j];
+                mGameField[i][j] = mGameLogic.getGameField()[j][i];
             }
         }
 
@@ -495,29 +485,16 @@ public class GameUIFragment extends Fragment {
             TableRow row = (TableRow) mGameFieldTableLayout.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 ImageView imageview = (ImageView) row.getChildAt(j);
-                switch (mGameField[i][j]) {
-                    case 0:
-                        imageview.setVisibility(View.INVISIBLE);
-                        break;
-                    case R.color.green:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.green);
-                        break;
-                    case R.color.yellow:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.yellow);
-                        break;
-                    case R.color.blue:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.blue);
-                        break;
-                    case R.color.purple:
-                        imageview.setVisibility(View.VISIBLE);
-                        imageview.setBackgroundResource(R.color.purple);
-                        break;
-                    default:
-                        imageview.setVisibility(View.INVISIBLE);
-                        break;
+
+                if(mGameField[i][j] == -1)
+                {
+                    imageview.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    int colorIndx = mGameField[i][j] % colors.length;
+                    imageview.setVisibility(View.VISIBLE);
+                    imageview.setBackgroundResource(colors[colorIndx]);
                 }
             }
         }

@@ -20,6 +20,7 @@ public class Figure_S_Left extends Figure {
     };
 
     public Figure_S_Left() {
+        setLocalCoords(genStartLocalCoord());
     }
 
     public Matrix3.RotationDegree[] getAvailableOrientations() { return sAvailableOrientations; }
