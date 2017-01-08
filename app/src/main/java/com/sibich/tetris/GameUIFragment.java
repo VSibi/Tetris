@@ -119,7 +119,7 @@ public class GameUIFragment extends Fragment {
         });
 
         mFrameLayout.setOnTouchListener(new View.OnTouchListener() {
-            boolean isMove = true, isMoveDown = true;
+            boolean isMove, isMoveDown;
             float startPointX = 0, endPointX = 0;
             float startPointY = 0, endPointY = 0;
             float resultX = 0, resultY = 0;
@@ -130,36 +130,45 @@ public class GameUIFragment extends Fragment {
                         startPointX = motionEvent.getX();
                         startPointY = motionEvent.getY();
                         isMove = false;
+                        isMoveDown = false;
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        isMove = true;
                         endPointX = motionEvent.getX();
+                        endPointY = motionEvent.getY();
                         resultX = endPointX - startPointX;
+                        resultY = endPointY - startPointY;
 
-                        if (resultX != 0) {
-                            if (Math.abs(resultX) > 20) {
-                                isMoveDown = false;
-                                if (resultX < 0) {
-                                    mGameLogic.moveFigureLeft(mGameLogic.getCurrFigure());
-                                    draw();
-                                } else {
-                                    mGameLogic.moveFigureRight(mGameLogic.getCurrFigure());
-                                    draw();
-                                }
+                        if (Math.abs(resultX) > 20.0) {
+                            isMove = true;
+                            isMoveDown = false;
+                            if (resultX < 0) {
+                                mGameLogic.moveFigureLeft(mGameLogic.getCurrFigure());
+                                draw();
+                            } else {
+                                mGameLogic.moveFigureRight(mGameLogic.getCurrFigure());
+                                draw();
+                            }
+                            startPointX = endPointX;
+                            resultX = 0;
+                        }
+                        else {
+                            if (Math.abs(resultY) > 80.0) {
+                                isMove = true;
+                                if (resultY > 0) isMoveDown = true;
+                                startPointY = endPointY;
+                                resultY = 0;
                             }
                         }
-
-                        startPointX = endPointX;
-                        resultX = 0;
                         break;
                     case MotionEvent.ACTION_UP:
 
-                        if (!isMove) {
+                      /*  if (!isMove) {
                             mGameLogic.rotateFigure(mGameLogic.getCurrFigure());
                             draw();
-                        }
+                        }*/
 
-                        if (isMoveDown) {
+                     /*   if (isMoveDown) {
+                            isMove = true;
                             endPointY = motionEvent.getY();
                             resultY = endPointY - startPointY;
 
@@ -175,7 +184,22 @@ public class GameUIFragment extends Fragment {
                             resultY = 0;
                         }
 
-                        isMoveDown = true;
+                        if (!isMove) {
+                            mGameLogic.rotateFigure(mGameLogic.getCurrFigure());
+                            draw();
+                        }
+
+                        isMoveDown = true;*/
+                        if (isMove) {
+                            if (isMoveDown) {
+                                mGameLogic.quickFallDownFigure(mGameLogic.getCurrFigure());
+                                draw();
+                            }
+                        }
+                        else {
+                            mGameLogic.rotateFigure(mGameLogic.getCurrFigure());
+                            draw();
+                        }
                         break;
                 }
                 return true;
@@ -228,7 +252,7 @@ public class GameUIFragment extends Fragment {
                     break;
             }
 
-            if (mNickName.equals("")) mNickName = "PLAYER";
+            if (mNickName.equals("")) mNickName = getString(R.string.PLAYER);
             mNickNameTextView.setText(mNickName);
 
             if (mGameLogic.getEndOfGame()) {
@@ -316,7 +340,7 @@ public class GameUIFragment extends Fragment {
         }
         mSpeedTextView.setText(R.string.Game_over);
         if (mGameLogic.isTopTenResult()) {
-            if (mNickName.equals("PLAYER")) inputNickNameForTableOfRecords();
+            if (mNickName.equals(getString(R.string.PLAYER))) inputNickNameForTableOfRecords();
             else {
                 if (mGameLogic.updateTableOfRecords(mNickName)) updateTop10Dialog();
                 else top10Dialog();
