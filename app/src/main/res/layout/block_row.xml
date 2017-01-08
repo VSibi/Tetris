@@ -3,16 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="0dp">
 
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
-    <ImageView style="@style/BlockGameField" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp"  />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_margin="0.5dp" />
 
 
 

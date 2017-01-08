@@ -3,15 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="0dp">
 
-    <TextView style="@style/TitleBlockTableOfRecords"
+    <TextView style="@style/BlockTableOfRecords"
         android:text="@string/Number"
-        android:gravity="center" />
-    <TextView style="@style/TitleBlockTableOfRecords"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:layout_margin="0.5dp"
+        android:minHeight="25dp"/>
+    <TextView style="@style/BlockTableOfRecords"
         android:text="@string/Nick"
-        android:gravity="center" />
-    <TextView style="@style/TitleBlockTableOfRecords"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:layout_margin="0.5dp"
+        android:minHeight="25dp" />
+    <TextView style="@style/BlockTableOfRecords"
         android:text="@string/Score"
-        android:gravity="center" />
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:layout_margin="0.5dp"
+        android:minHeight="25dp" />
 
 
 

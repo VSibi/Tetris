@@ -13,10 +13,10 @@
             android:layout_height="wrap_content"
             android:text="@string/Help"
             android:layout_gravity="top|center"
-            android:textSize="30sp"
             android:textColor="@color/colorAccent"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            android:textSize="19sp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -33,14 +33,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+
+
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Text_Help_fragment"
-            android:layout_gravity="top"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:textSize="25sp"
-            android:gravity="left" />
+            android:id="@+id/scrollView" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Text_Help_fragment"
+                android:layout_gravity="top"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="start"
+                android:textSize="17sp" />
+
+            </ScrollView>
+
     </LinearLayout>
 </LinearLayout>

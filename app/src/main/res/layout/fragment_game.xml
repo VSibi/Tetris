@@ -20,22 +20,28 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:gravity="center">
+                android:layout_gravity="start">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/input_nick_imageButton"
-                    android:src="@drawable/gamer" />
+                    android:src="@drawable/button_gamer"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="left" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/nickNameTextView"
                     android:text="@string/PLAYER"
-                    android:textSize="18sp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginBottom="5dp" />
+                    android:layout_marginBottom="3dp"
+                    android:textSize="11sp"
+                    android:layout_marginTop="3dp"
+                    android:layout_gravity="center" />
             </LinearLayout>
 
 
@@ -45,14 +51,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_pause_imageButton"
                 android:layout_gravity="end"
-                android:src="@drawable/game_pause" />
+                android:src="@drawable/button_game_pause"
+                android:background="@android:color/transparent"
+                android:layout_margin="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Score"
                 android:layout_gravity="center_horizontal|top"
-                android:textSize="25sp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
@@ -61,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/score_textView"
                 android:layout_gravity="center"
-                android:textSize="30sp"
+                android:textSize="17sp"
                 android:text="0"
                 android:textColor="@android:color/primary_text_light" />
 
@@ -76,7 +83,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25">
+                android:layout_weight="18">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -89,30 +96,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Next"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="25sp" />
+                        android:textColor="@color/colorAccent" />
 
                     <TableLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/next_figure_game_field_tablelayout"
-                        android:layout_gravity="top|center"
                         android:stretchColumns="*"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
                         android:layout_marginBottom="20dp"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="7dp">
 
                         <include
                             layout="@layout/next_figure_block_row"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_width="match_parent"
                             android:layout_weight="1" />
 
                         <include
                             layout="@layout/next_figure_block_row"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_width="match_parent"
                             android:layout_weight="1" />
 
@@ -138,7 +142,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="64"
                 android:layout_gravity="center">
 
                 <ImageView
@@ -147,14 +151,14 @@
                     android:id="@+id/imageView"
                     android:layout_gravity="left"
                     android:background="@drawable/border_line"
-                    android:layout_marginBottom="28dp" />
+                    android:layout_marginBottom="10dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView2"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="28dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/border_line" />
 
                 <ImageView
@@ -162,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView3"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/border_line" />
 
                 <TableLayout
@@ -172,9 +176,9 @@
                     android:layout_gravity="top|center"
                     android:stretchColumns="*"
                     android:background="@color/material_deep_teal_200"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="30dp">
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp">
 
                     <include
                         layout="@layout/block_row"
@@ -291,7 +295,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25">
+                android:layout_weight="18">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -310,7 +314,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Speed"
-                        android:textSize="25sp"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
@@ -318,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:text="1"
                         android:id="@+id/speed_textView"
-                        android:textSize="30sp"
+                        android:textSize="17sp"
                         android:gravity="center"
                         android:textColor="@android:color/primary_text_light" />
 
@@ -340,7 +343,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Level"
-                        android:textSize="25sp"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
@@ -348,7 +350,7 @@
                         android:layout_height="wrap_content"
                         android:text="15"
                         android:id="@+id/level_textView"
-                        android:textSize="30sp"
+                        android:textSize="17sp"
                         android:textColor="@android:color/primary_text_light" />
                 </LinearLayout>
             </LinearLayout>

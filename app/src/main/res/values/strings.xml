@@ -7,7 +7,7 @@
     <string name="Speed">Speed</string>
     <string name="Score">Score</string>
     <string name="Level">Level</string>
-    <string name="OK">OK</string>
+    <string name="OK" translatable="false">OK</string>
     <string name="Cancel">Cancel</string>
     <string name="Pause_game">Pause game</string>
     <string name="Play">Play</string>
@@ -18,7 +18,7 @@
     <string name="Help">Help</string>
     <string name="Next">Next</string>
     <string name="Table_of_records">Table of records</string>
-    <string name="Number">№</string>
+    <string name="Number" translatable="false">№</string>
     <string name="Nick">Nick</string>
     <string name="Text_Help_fragment">During the game, the program displays a rectangular playing field - "glass", which fall one after the other bones.
         Player during the fall of the bone can move it left or right to rotate it relative to the center, and "dropping" it,
@@ -27,13 +27,13 @@
     <string name="Enter">Enter</string>
     <string name="Enter_nick">Enter NickName:</string>
     <string name="PLAYER">PLAYER</string>
-    <string name="Game_over">GAME OVER!</string>
+    <string name="Game_over">Game\nover!</string>
     <string name="Save_game">Save game</string>
     <string name="Load_game">Load game</string>
     <string name="Continue">Continue</string>
     <string name="Continue_question">Continue?</string>
     <string name="Continue_previous_game">Do you wish to continue your previous game?</string>
     <string name="Selecting_new_game">Selecting \"NEW\" will erase your saved game.</string>
-    <string name="result_top_ten">Congratulations! \n Your result in the top 10!</string>
-    <string name="upgrade_result_top_ten">Congratulations! \n You updated the result \n in the top 10!</string>
+    <string name="result_top_ten">Congratulations! \n\n Your result in the top 10!</string>
+    <string name="upgrade_result_top_ten">Congratulations! \n\n You updated the result \n in the top 10!</string>
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp"/>
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+    <ImageView style="@style/BlockGameField"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_margin="1dp" />
+
+
+
+</TableRow>
