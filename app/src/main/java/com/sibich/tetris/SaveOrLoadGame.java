@@ -21,12 +21,12 @@ import java.io.Writer;
 /**
  * Created by Sibic_000 on 10.10.2016.
  */
-public class JSONSerializer {
+public class SaveOrLoadGame {
 
     private Context mContext;
     private String mFilename;
 
-    public JSONSerializer(Context c, String f ) {
+    public SaveOrLoadGame(Context c, String f ) {
         mContext = c;
         mFilename = f;
     }
