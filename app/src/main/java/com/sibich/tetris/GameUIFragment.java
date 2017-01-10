@@ -42,7 +42,7 @@ public class GameUIFragment extends Fragment {
     private final int mWidthGameField = 10;
     private final int mHeightGameField = 20;
 
-    private JSONSerializer mJSONSerializer;
+    private SaveOrLoadGame mSaveOrLoadGame;
     private static final String FILENAME = "gamefield.json";
 
     private int[][] mGameField =  new int [mHeightGameField][mWidthGameField];
@@ -74,7 +74,7 @@ public class GameUIFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_game, parent, false);
 
         mGameLogic = new GameLogic(getActivity());
-        mJSONSerializer = new JSONSerializer(getActivity(), FILENAME);
+        mSaveOrLoadGame = new SaveOrLoadGame(getActivity(), FILENAME);
 
         mFrameLayout = (FrameLayout) v.findViewById(R.id.frame_layout);
         mGameFieldTableLayout = (TableLayout) v.findViewById(R.id.game_field_tablelayout);
@@ -365,7 +365,7 @@ public class GameUIFragment extends Fragment {
         edit.apply();
 
         try {
-            mJSONSerializer.saveGameField(mGameLogic.getFixedBlocks());
+            mSaveOrLoadGame.saveGameField(mGameLogic.getFixedBlocks());
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
         }catch (Exception e) {
             Toast.makeText(getActivity(), "Error SAVE file", Toast.LENGTH_SHORT).show();
@@ -392,7 +392,7 @@ public class GameUIFragment extends Fragment {
         mGameLogic.setSpeed(sharedPreferences.getInt("Speed", 1));
 
         try {
-            mGameLogic.setFixedBlocks(mJSONSerializer.loadGameField());
+            mGameLogic.setFixedBlocks(mSaveOrLoadGame.loadGameField());
 
             Toast.makeText(getActivity(), "LOAD IS OK!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
             return true;
@@ -584,7 +584,7 @@ public class GameUIFragment extends Fragment {
     public void onStop() {
         super.onStop();
         if (mGameLogic.getEndOfGame()) {
-            mJSONSerializer.deleteSavedGame();
+            mSaveOrLoadGame.deleteSavedGame();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putString("NickName", mNickName);
