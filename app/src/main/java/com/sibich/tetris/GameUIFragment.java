@@ -61,7 +61,7 @@ public class GameUIFragment extends Fragment {
     private ImageButton mSpeedMinus, mSpeedPlus, mGamePause, mInputNickName;
 
     private String mNickName = "PLAYER";
-    private boolean isPause = false;
+    private boolean mIsPause = false;
 
 
 
@@ -275,25 +275,25 @@ public class GameUIFragment extends Fragment {
                     if(!mGameLogic.getEndOfGame()) {
                         startGame();
                     }
-                    isPause = false;
+                    mIsPause = false;
                     break;
                 case "new_game":
                     newGame();
-                    isPause = false;
+                    mIsPause = false;
                     break;
                 case "records":
                     Intent i = new Intent(getActivity(), TableOfRecordsActivity.class);
                     startActivity(i);
-                    isPause = false;
+                    mIsPause = false;
                     break;
                 case "help":
                     Intent j = new Intent(getActivity(), HelpActivity.class);
                     startActivity(j);
-                    isPause = false;
+                    mIsPause = false;
                     break;
                 case "exit":
                     getActivity().onBackPressed();
-                    isPause = false;
+                    mIsPause = false;
                     break;
 
 
@@ -310,7 +310,7 @@ public class GameUIFragment extends Fragment {
     }
 
     private void pauseGame(){
-        isPause = true;
+        mIsPause = true;
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
@@ -577,7 +577,7 @@ public class GameUIFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (!isPause) pauseGame();
+        if (!mIsPause) pauseGame();
     }
 
     @Override
