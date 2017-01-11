@@ -62,9 +62,9 @@ public class GameLogic {
     private Timer mTimer;
     private long mTimeInterval = 550;
 
-    private Timer mTimerForFallenFigures;
+   // private Timer mTimerForFallenFigures;
 
-    private boolean mIsFallDownAllFallenFigures = false;
+    private boolean mIsFallDownAllBrokenFigures = false;
   //  private int mEndOfFallDownFallenFigures = 0;
 
 
@@ -81,6 +81,7 @@ public class GameLogic {
                 mFixedBlocks[i][j] = 0;
             }
         }
+        setSpeed(1);
 
         initListNextFigures();
         updateNextFigureGameField(mListNextFigures.get(1));
@@ -157,9 +158,9 @@ public class GameLogic {
         return mIsEndOfGame;
     }
 
-    public void initNewGame() {
+  /*  public void initNewGame() {
         mIsEndOfGame = false;
-    }
+    }*/
 
   /*  public int[] getColors() {
         return mColors;
@@ -169,7 +170,7 @@ public class GameLogic {
         return mCurrFigure;
     }
 
-    public void nextFigure() {
+    private void nextFigure() {
         if (!mIsEndOfGame) {
 
             updateNextFigureGameField(mListNextFigures.get(1));
@@ -194,8 +195,8 @@ public class GameLogic {
             @Override
             public void run() {
 
-                if (mIsFallDownAllFallenFigures) {
-                    fallDownFallenFigures();
+                if (mIsFallDownAllBrokenFigures) {
+                    fallDownBrokenFigures();
                     removeLine();
                 }
                 else {
@@ -218,12 +219,12 @@ public class GameLogic {
         mTimerForFallenFigures.schedule(new TimerTask() {
             @Override
             public void run() {
-                fallDownFallenFigures();
+                fallDownBrokenFigures();
             }
         }, 0,  50);
     }*/
 
-    public void fallDownFigure(Figure figure) {
+    private void fallDownFigure(Figure figure) {
         checkCollision(figure);
 
         if (!mIsFallDown) {
@@ -483,7 +484,7 @@ public class GameLogic {
     }
 
 
-    public void updateNextFigureGameField(Figure figure) {
+    private void updateNextFigureGameField(Figure figure) {
 
         for (int i = 0; i < mNextFigureGameField.length; i++) {
             for (int j = 0; j < mNextFigureGameField[i].length; j++) {
@@ -513,7 +514,7 @@ public class GameLogic {
         }
     }
 
-    public void updateGameField(Figure figure) {
+    private void updateGameField(Figure figure) {
 
         for (int i = 0; i < mGameField.length; i++) {
             for (int j = 0; j < mGameField[i].length; j++) {
@@ -619,7 +620,7 @@ public class GameLogic {
         }
     }
 
-    public boolean checkFullLines() {
+    private boolean checkFullLines() {
         int index = 0;
         for (int i = 0; i < mFixedBlocks.length; i++) {
             for (int j = 0; j < mFixedBlocks[i].length; j++) {
@@ -663,7 +664,7 @@ public class GameLogic {
         startTimer();
     }*/
 
-    public void removeLine() {
+    private void removeLine() {
       //  pauseGame();
         int line;
         checkFullLines();
@@ -746,9 +747,9 @@ public class GameLogic {
 
                 //   startTimerForFallenFigures();
 
-                mIsFallDownAllFallenFigures = true;
+                mIsFallDownAllBrokenFigures = true;
                 for (int i = 0; i < mFixedBlocks[line].length; i++) mFixedBlocks[line][i] = 0;
-                //  fallDownFallenFigures();
+                //  fallDownBrokenFigures();
                 //   startTimer();
 
 
@@ -819,7 +820,7 @@ public class GameLogic {
         if (checkFullLines()) removeLine();
     }
 
-    private void fallDownFallenFigures() {
+    private void fallDownBrokenFigures() {
       //  Collections.sort(mListBrokenFigures, new SortedFiguresByPosition());
 
        // updateFixedBlocks();
@@ -896,12 +897,12 @@ public class GameLogic {
                 fig1.setTranslate(0, -1);
                 mListBrokenFigures.set(i, fig1.clone());
                 isAbilityToFiguresFallDown.set(i, false);
-             //   mIsFallDownAllFallenFigures = false;
+             //   mIsFallDownAllBrokenFigures = false;
             }
             else {
                 mListBrokenFigures.set(i, fig1.clone());
             //    updateFixedBlocks();
-            //    mIsFallDownAllFallenFigures = true;
+            //    mIsFallDownAllBrokenFigures = true;
             }
 
 
@@ -925,11 +926,11 @@ public class GameLogic {
                 figure.setTranslate(0, 1);
                 mListBrokenFigures.set(i, figure.clone());
                 updateFixedBlocks();
-                mIsFallDownAllFallenFigures = true;
+                mIsFallDownAllBrokenFigures = true;
 
             }
             else {
-                mIsFallDownAllFallenFigures = false;
+                mIsFallDownAllBrokenFigures = false;
             }*/
         }
 
@@ -939,9 +940,9 @@ public class GameLogic {
                 isAbilityToFiguresFallDown) {
             if (!isAbilityToFigureFallDown) indx++;
         }
-        if (indx == isAbilityToFiguresFallDown.size()) mIsFallDownAllFallenFigures = false;
+        if (indx == isAbilityToFiguresFallDown.size()) mIsFallDownAllBrokenFigures = false;
 
-        if (!mIsFallDownAllFallenFigures) {
+        if (!mIsFallDownAllBrokenFigures) {
             for (int i = 0; i < mListBrokenFigures.size(); i++) {
                 mListFallenFigures.add(mListBrokenFigures.get(i).clone());
             }
@@ -975,13 +976,17 @@ public class GameLogic {
     }
 
     public void setSpeed(int mSpeed) {
-        this.mSpeed = mSpeed;
+        this.mSpeed = 1;
+        mTimeInterval = 550;
+        for (int i = 1; i < mSpeed; i++) {
+            speedPlus();
+        }
     }
 
     public void speedPlus() {
         if (getSpeed() < 10) {
+            mSpeed = getSpeed() + 1;
             mTimeInterval -= 50;
-            setSpeed((getSpeed() + 1));
 
             startTimer();
         }
@@ -989,8 +994,8 @@ public class GameLogic {
 
     public void speedMin() {
         if (getSpeed() > 1) {
+            mSpeed = getSpeed() - 1;
             mTimeInterval += 50;
-            setSpeed((getSpeed() - 1));
 
             startTimer();
         }
@@ -1117,6 +1122,19 @@ public class GameLogic {
             mDatabase.insert(RecordsTable.NAME, null, values);
             return false;
         }
+    }
+
+    public boolean isSaveGame() {
+        return false;
+    }
+
+    public boolean saveGameField() {
+        return false;
+    }
+
+    public boolean loadGameField() {
+
+        return false;
     }
 
     
