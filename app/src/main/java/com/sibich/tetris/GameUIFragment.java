@@ -354,7 +354,7 @@ public class GameUIFragment extends Fragment{
 
         private void newGame() {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            mNickName = sharedPreferences.getString("NickName", "PLAYER");
+            mNickName = sharedPreferences.getString("NickName", getString(R.string.PLAYER));
             mNickNameTextView.setText(mNickName);
 
             mGameLogic.newGame();
@@ -396,7 +396,7 @@ public class GameUIFragment extends Fragment{
 
         private void loadGame() {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            mNickName = sharedPreferences.getString("NickName", "PLAYER");
+            mNickName = sharedPreferences.getString("NickName", getString(R.string.PLAYER));
             mNickNameTextView.setText(mNickName);
             mGameLogic.setScore(sharedPreferences.getInt("Score", 0));
             mGameLogic.setSpeed(sharedPreferences.getInt("Speed", 1));
