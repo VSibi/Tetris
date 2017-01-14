@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sibich.tetris.database.TetrisDbSchema.RecordsTable;
+import com.sibich.tetris.database.TetrisDbSchema.GameFieldTable;
 
 /**
  * Created by Slavon on 02.12.2016.
@@ -27,6 +28,23 @@ public class RecordsBaseHelper extends SQLiteOpenHelper {
                 ");"
 
         );
+
+        db.execSQL("create table " + GameFieldTable.NAME  + "("
+                + " _id integer primary key autoincrement, "
+                + GameFieldTable.Cols.COORD1_X + ", "
+                + GameFieldTable.Cols.COORD1_Y + ", "
+                + GameFieldTable.Cols.COORD2_X + ", "
+                + GameFieldTable.Cols.COORD2_Y + ", "
+                + GameFieldTable.Cols.COORD3_X + ", "
+                + GameFieldTable.Cols.COORD3_Y + ", "
+                + GameFieldTable.Cols.COORD4_X + ", "
+                + GameFieldTable.Cols.COORD4_Y + ", "
+
+                + GameFieldTable.Cols.COLOR +
+                ");"
+
+        );
+
 
       /*  db.execSQL("create table mytable ("
                 + "id integer primary key autoincrement,"
