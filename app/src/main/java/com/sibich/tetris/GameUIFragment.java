@@ -210,7 +210,7 @@ public class GameUIFragment extends Fragment{
 
             if(isSavedGame()) {
                 continueSavedGame();
-                Toast.makeText(getActivity(), "EXIST SAVE GAME!", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getActivity(), "EXIST SAVE GAME!", Toast.LENGTH_SHORT).show();
             }
             else {
                 loadGame();
@@ -371,8 +371,9 @@ public class GameUIFragment extends Fragment{
             edit.apply();
 
             try {
-                if (mGameLogic.saveGameField(mGameLogic.getListFallenFigures()))
-                    Toast.makeText(getActivity(), "SAVE IS OK!", Toast.LENGTH_SHORT).show();
+                if (mGameLogic.saveGameField(mGameLogic.getListFallenFigures())) {
+                    //   Toast.makeText(getActivity(), "SAVE IS OK!", Toast.LENGTH_SHORT).show();
+                }
                 else  Toast.makeText(getActivity(), "NO SAVE", Toast.LENGTH_SHORT).show();
               /*  mSaveOrLoadGame.saveGameField(mGameLogic.getFixedBlocks());
                 Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();*/
@@ -402,8 +403,9 @@ public class GameUIFragment extends Fragment{
             mGameLogic.setSpeed(sharedPreferences.getInt("Speed", 1));
 
             try {
-                if(mGameLogic.loadGameField())
-                    Toast.makeText(getActivity(), "LOAD IS OK!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
+                if(mGameLogic.loadGameField()) {
+              //      Toast.makeText(getActivity(), "LOAD IS OK!", Toast.LENGTH_SHORT).show();
+                }
                 else  Toast.makeText(getActivity(), "NO LOAD", Toast.LENGTH_SHORT).show();
            //     mGameLogic.setFixedBlocks(mSaveOrLoadGame.loadGameField());
 
