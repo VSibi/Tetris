@@ -7,13 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.sibich.tetris.database.RecordsBaseHelper;
+import com.sibich.tetris.database.TetrisBaseHelper;
 import com.sibich.tetris.database.TetrisDbSchema.RecordsTable;
 
 /**
@@ -35,7 +34,7 @@ public class TableOfRecordsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
 
-        mDataBase = new RecordsBaseHelper(getActivity())
+        mDataBase = new TetrisBaseHelper(getActivity())
                 .getWritableDatabase();
 
         View v = inflater.inflate(R.layout.fragment_table_of_records, parent, false);
