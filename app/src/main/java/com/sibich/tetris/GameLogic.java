@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
 
-import com.sibich.tetris.database.RecordsBaseHelper;
+import com.sibich.tetris.database.TetrisBaseHelper;
 import com.sibich.tetris.database.TetrisDbSchema.RecordsTable;
 import com.sibich.tetris.database.TetrisDbSchema.GameFieldTable;
 
@@ -74,7 +74,7 @@ public class GameLogic {
 
         public GameLogic(Context context) {
 
-            mDatabase = new RecordsBaseHelper(context)
+            mDatabase = new TetrisBaseHelper(context)
                     .getWritableDatabase();
 
 
