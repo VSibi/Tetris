@@ -9,7 +9,7 @@ import java.util.Collections;
  * Created by Sibic_000 on 03.01.2017.
  */
 
-public class BrokenFigure extends Figure implements Cloneable{
+public class BrokenFigure extends Figure {
     private ArrayList<Point> mAllCoords = new ArrayList<>();
     private String mStateOfRotation;
 
