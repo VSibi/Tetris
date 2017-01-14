@@ -10,12 +10,12 @@ import com.sibich.tetris.database.TetrisDbSchema.GameFieldTable;
 /**
  * Created by Slavon on 02.12.2016.
  */
-public class RecordsBaseHelper extends SQLiteOpenHelper {
+public class TetrisBaseHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "recordsBase.db";
 
-    public RecordsBaseHelper(Context context) {
+    public TetrisBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
