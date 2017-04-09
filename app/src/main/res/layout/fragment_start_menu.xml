@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:id="@+id/start_menu_imageView_logo"
+        android:layout_gravity="center"
+        android:alpha="0"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/start_menu_imageButton_classic"
+                android:background="@android:color/transparent"
+                android:layout_margin="2dp"
+                android:src="@drawable/classic_button"
+                android:alpha="0"/>
+
+       <!--     <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_menu_Button_classic"
+                android:text="@string/classic"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:background="@color/purple"
+                android:layout_margin="10dp"
+                android:alpha="0" /> -->
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_menu_Button_open_image"
+                android:text="@string/open_image"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:background="@color/blue"
+                android:layout_margin="10dp"
+                android:alpha="0" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_menu_imageView_separate_line"
+            android:background="@drawable/border_line"
+            android:layout_above="@+id/start_menu_imageButton_help"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0" />
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_menu_imageButton_info"
+                android:src="@drawable/info_normal"
+                android:background="@android:color/transparent"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:alpha="0"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_menu_imageButton_help"
+                android:src="@drawable/help_normal"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:alpha="0" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_menu_imageButton_share"
+                android:src="@drawable/share_normal"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:alpha="0"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
