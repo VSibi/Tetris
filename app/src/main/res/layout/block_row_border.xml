@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView style="@style/BlockBorder"
+        android:minHeight="21dp"
+        android:minWidth="4dp"
+        android:layout_marginTop="0.5dp"
+        android:layout_marginBottom="0.5dp"/>
+
+
+
+
+</TableRow>
