@@ -6,17 +6,17 @@
     <TextView style="@style/BlockTableOfRecords"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:minHeight="45dp" />
     <TextView style="@style/BlockTableOfRecords"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:minHeight="45dp" />
     <TextView style="@style/BlockTableOfRecords"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:minHeight="45dp" />
 
 

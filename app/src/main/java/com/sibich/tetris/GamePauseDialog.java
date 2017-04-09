@@ -1,5 +1,7 @@
 package com.sibich.tetris;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,7 +20,8 @@ public class GamePauseDialog extends DialogFragment {
     public static final String EXTRA_PAUSE_DIALOG_PUSH_BUTTON =
             "com.sibich.tetris.pausedialog.push_button";
 
-    private Button mResume, mSaveGame, mNewGame, mRecords, mHelp, mExit;
+    private Button mResumeButton, mNewGameButton,
+            mRecordsButton, mHelpButton, mMainMenuButton;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -26,8 +29,8 @@ public class GamePauseDialog extends DialogFragment {
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.fragment_pause_game, null);
 
-        mResume = (Button)v.findViewById(R.id.game_pause_button_resume);
-        mResume.setOnClickListener(new View.OnClickListener() {
+        mResumeButton = (Button)v.findViewById(R.id.game_pause_button_resume);
+        mResumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pushButton = "resume";
@@ -36,8 +39,8 @@ public class GamePauseDialog extends DialogFragment {
             }
         });
 
-        mNewGame = (Button)v.findViewById(R.id.game_pause_button_new_game);
-        mNewGame.setOnClickListener(new View.OnClickListener() {
+        mNewGameButton = (Button)v.findViewById(R.id.game_pause_button_new_game);
+        mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pushButton = "new_game";
@@ -46,8 +49,8 @@ public class GamePauseDialog extends DialogFragment {
             }
         });
 
-        mRecords = (Button) v.findViewById(R.id.game_pause_button_records);
-        mRecords.setOnClickListener(new View.OnClickListener() {
+        mRecordsButton = (Button) v.findViewById(R.id.game_pause_button_records);
+        mRecordsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pushButton = "records";
@@ -56,8 +59,8 @@ public class GamePauseDialog extends DialogFragment {
             }
         });
 
-        mHelp = (Button) v.findViewById(R.id.game_pause_button_help);
-        mHelp.setOnClickListener(new View.OnClickListener() {
+        mHelpButton = (Button) v.findViewById(R.id.game_pause_button_help);
+        mHelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pushButton = "help";
@@ -66,11 +69,11 @@ public class GamePauseDialog extends DialogFragment {
             }
         });
 
-        mExit = (Button)v.findViewById(R.id.game_pause_button_exit);
-        mExit.setOnClickListener(new View.OnClickListener() {
+        mMainMenuButton = (Button)v.findViewById(R.id.game_pause_button_main_menu);
+        mMainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pushButton = "exit";
+                String pushButton = "main_menu";
                 sendResult(Activity.RESULT_OK, pushButton);
                 GamePauseDialog.this.getDialog().cancel();
             }
@@ -89,5 +92,59 @@ public class GamePauseDialog extends DialogFragment {
         intent.putExtra(EXTRA_PAUSE_DIALOG_PUSH_BUTTON, pushButton);
         getTargetFragment()
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);
+    }
+
+    private void startAnimation() {
+        AnimatorSet animatorResumeButton = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                R.animator.menu_pause_anim);
+        animatorResumeButton.setTarget(mResumeButton);
+        animatorResumeButton.setStartDelay(100);
+        animatorResumeButton.start();
+
+        AnimatorSet animatorNewGameButton = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                R.animator.menu_pause_anim);
+        animatorNewGameButton.setTarget(mNewGameButton);
+        animatorNewGameButton.setStartDelay(300);
+        animatorNewGameButton.start();
+
+        AnimatorSet animatorRecordsButton = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                R.animator.menu_pause_anim);
+        animatorRecordsButton.setTarget(mRecordsButton);
+        animatorRecordsButton.setStartDelay(500);
+        animatorRecordsButton.start();
+
+        AnimatorSet animatorHelpButton = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                R.animator.menu_pause_anim);
+        animatorHelpButton.setTarget(mHelpButton);
+        animatorHelpButton.setStartDelay(700);
+        animatorHelpButton.start();
+
+        AnimatorSet animatorExitButton = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                R.animator.menu_pause_anim);
+        animatorExitButton.setTarget(mMainMenuButton);
+        animatorExitButton.setStartDelay(900);
+        animatorExitButton.start();
+       /* ObjectAnimator resumeButtonAnimator = ObjectAnimator
+                .ofFloat(mResumeButton, "scaleX", 0.0f, 1.0f)
+                .setDuration(500);
+        resumeButtonAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        ObjectAnimator newGameButtonAnimator = ObjectAnimator
+                .ofFloat(mNewGameButton, "scaleX", 0.0f, 1.0f)
+                .setDuration(500);
+        newGameButtonAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet
+                .play(resumeButtonAnimator)
+                .before(newGameButtonAnimator);
+        animatorSet.start();*/
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startAnimation();
     }
 }

@@ -17,7 +17,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="20dp"
-        android:textSize="23sp" />
+        android:textSize="23sp"
+        android:alpha="0" />
 
     <Button
         android:layout_width="match_parent"
@@ -29,7 +30,8 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="20dp"
-        android:textSize="23sp" />
+        android:textSize="23sp"
+        android:alpha="0" />
 
     <Button
         android:layout_width="match_parent"
@@ -41,7 +43,8 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="20dp"
-        android:textSize="23sp" />
+        android:textSize="23sp"
+        android:alpha="0" />
 
     <Button
         android:layout_width="match_parent"
@@ -53,17 +56,19 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="20dp"
-        android:textSize="23sp" />
+        android:textSize="23sp"
+        android:alpha="0" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Exit"
-        android:id="@+id/game_pause_button_exit"
+        android:text="@string/Main_menu"
+        android:id="@+id/game_pause_button_main_menu"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/holo_red_light"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="24dp"
-        android:textSize="23sp" />
+        android:textSize="23sp"
+        android:alpha="0" />
 </LinearLayout>

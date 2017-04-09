@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.sibich.tetris.database.TetrisDbSchema.BorderGameFieldTable;
 import com.sibich.tetris.database.TetrisDbSchema.RecordsTable;
-import com.sibich.tetris.database.TetrisDbSchema.GameFieldTable;
+import com.sibich.tetris.database.TetrisDbSchema.GameFieldForOpenImageTable;
+import com.sibich.tetris.database.TetrisDbSchema.GameFieldForClassicTable;
 
 /**
  * Created by Slavon on 02.12.2016.
@@ -21,6 +23,14 @@ public class TetrisBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL("create table " + BorderGameFieldTable.NAME  + "("
+                + " _id integer primary key autoincrement, "
+                + BorderGameFieldTable.Cols.BLOCK +
+                ");"
+
+        );
+
         db.execSQL("create table " + RecordsTable.NAME  + "("
                 + " _id integer primary key autoincrement, "
                 + RecordsTable.Cols.NICKNAME + ", "
@@ -29,18 +39,34 @@ public class TetrisBaseHelper extends SQLiteOpenHelper {
 
         );
 
-        db.execSQL("create table " + GameFieldTable.NAME  + "("
+        db.execSQL("create table " + GameFieldForClassicTable.NAME  + "("
                 + " _id integer primary key autoincrement, "
-                + GameFieldTable.Cols.COORD1_X + ", "
-                + GameFieldTable.Cols.COORD1_Y + ", "
-                + GameFieldTable.Cols.COORD2_X + ", "
-                + GameFieldTable.Cols.COORD2_Y + ", "
-                + GameFieldTable.Cols.COORD3_X + ", "
-                + GameFieldTable.Cols.COORD3_Y + ", "
-                + GameFieldTable.Cols.COORD4_X + ", "
-                + GameFieldTable.Cols.COORD4_Y + ", "
+                + GameFieldForClassicTable.Cols.COORD1_X + ", "
+                + GameFieldForClassicTable.Cols.COORD1_Y + ", "
+                + GameFieldForClassicTable.Cols.COORD2_X + ", "
+                + GameFieldForClassicTable.Cols.COORD2_Y + ", "
+                + GameFieldForClassicTable.Cols.COORD3_X + ", "
+                + GameFieldForClassicTable.Cols.COORD3_Y + ", "
+                + GameFieldForClassicTable.Cols.COORD4_X + ", "
+                + GameFieldForClassicTable.Cols.COORD4_Y + ", "
 
-                + GameFieldTable.Cols.COLOR +
+                + GameFieldForClassicTable.Cols.COLOR +
+                ");"
+
+        );
+
+        db.execSQL("create table " + GameFieldForOpenImageTable.NAME  + "("
+                + " _id integer primary key autoincrement, "
+                + GameFieldForOpenImageTable.Cols.COORD1_X + ", "
+                + GameFieldForOpenImageTable.Cols.COORD1_Y + ", "
+                + GameFieldForOpenImageTable.Cols.COORD2_X + ", "
+                + GameFieldForOpenImageTable.Cols.COORD2_Y + ", "
+                + GameFieldForOpenImageTable.Cols.COORD3_X + ", "
+                + GameFieldForOpenImageTable.Cols.COORD3_Y + ", "
+                + GameFieldForOpenImageTable.Cols.COORD4_X + ", "
+                + GameFieldForOpenImageTable.Cols.COORD4_Y + ", "
+
+                + GameFieldForOpenImageTable.Cols.COLOR +
                 ");"
 
         );

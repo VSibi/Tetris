@@ -1,5 +1,9 @@
 package com.sibich.tetris;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +23,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,17 +30,21 @@ import java.util.TimerTask;
  * Created by Sibic_000 on 14.01.2017.
  */
 public class GameUIFragment extends Fragment{
+    public static final String ARG_GAME_MODE = "game_mode";
+
 
         private static final String DIALOG_PAUSE = "Pause";
         private static final String DIALOG_INPUT_NICK = "Input_nick";
         private static final String DIALOG_INPUT_NICK_FOR_TABLE_OF_RECORDS =
                 "Input_nick_for_table_of_records";
         private static final String DIALOG_TOP_10 = "Top_10_dialog";
+        private static final String DIALOG_WINIMAGE = "WinImage_dialog";
 
         private static final int REQUEST_ACTION_IN_PAUSE_DIALOG = 0;
         private static final int REQUEST_ACTION_IN_INPUT_NICK_DIALOG = 1;
         private static final int REQUEST_ACTION_IN_INPUT_NICK_FOR_TABLE_OF_RECORDS_DIALOG = 2;
         private static final int REQUEST_ACTION_IN_CONTINUE_SAVED_GAME_DIALOG = 3;
+        private static final int REQUEST_ACTION_IN_WINIMAGE_DIALOG = 4;
 
         private final int mWidthGameField = 10;
         private final int mHeightGameField = 20;
@@ -54,21 +61,38 @@ public class GameUIFragment extends Fragment{
         private GameLogic mGameLogic;
 
         private FrameLayout mFrameLayout;
-        private TableLayout mGameFieldTableLayout, mNextFigureTableLayout;
+        private TableLayout mGameFieldTableLayout, mNextFigureTableLayout,
+                mBorderLeftTableLayout, mBorderRightTableLayout;
 
-        private TextView mSpeedTextView, mScoreTextView, mLevelTextView, mNickNameTextView;
+        private TextView mSpeedTextView, mScoreTextView, mLevelTextView,
+                mNickNameTextView, mGameOverTextView,  mGameWinTextView,
+                mThingTextView, mThingTitleTextView, mLevelUpTextView;
 
         private ImageButton mSpeedMinus, mSpeedPlus, mGamePause, mInputNickName;
 
         private String mNickName = "";
+        private String mGameMode = "openImage";
+
         private boolean mIsPause = false;
+        private int mMaxLevelCount = 10;
+        private int mCurrLevel;
+
+    public static GameUIFragment newInstance(String gameMode) {
+            Bundle args = new Bundle();
+            args.putSerializable(ARG_GAME_MODE, gameMode);
+            GameUIFragment fragment = new GameUIFragment();
+            fragment.setArguments(args);
+            return fragment;
+        }
 
 
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            mGameMode = (String) getArguments().getSerializable(ARG_GAME_MODE);
         }
+
         public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                                  Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.fragment_game, parent, false);
@@ -76,16 +100,67 @@ public class GameUIFragment extends Fragment{
             mNickName = getString(R.string.PLAYER);
 
             mGameLogic = new GameLogic(getActivity());
+            mGameLogic.setGameMode(mGameMode);
         //    mSaveOrLoadGame = new SaveOrLoadGame(getActivity(), FILENAME);
 
+            mThingTextView = (TextView) v.findViewById(R.id.thing_textView);
+            mThingTitleTextView = (TextView) v.findViewById(R.id.thing_title_textView);
+
             mFrameLayout = (FrameLayout) v.findViewById(R.id.frame_layout);
-            mGameFieldTableLayout = (TableLayout) v.findViewById(R.id.game_field_tablelayout);
             mNextFigureTableLayout = (TableLayout) v.findViewById(R.id.next_figure_game_field_tablelayout);
+            mGameFieldTableLayout = (TableLayout) v.findViewById(R.id.game_field_tablelayout);
+            mBorderLeftTableLayout = (TableLayout) v.findViewById(R.id.border_left_tablelayout);
+            mBorderRightTableLayout = (TableLayout) v.findViewById(R.id.border_right_tablelayout);
+            switch (mGameMode) {
+                case "classic":
+                    mGameFieldTableLayout.setBackgroundResource(R.color.background_game_field);
+                    mThingTextView.setVisibility(View.INVISIBLE);
+                    mThingTitleTextView.setVisibility(View.INVISIBLE);
+                    break;
+                case "openImage":
+                    mGameFieldTableLayout.setBackgroundResource(R.drawable.background_game_field);
+                    for (int i = mBorderLeftTableLayout.getChildCount() - 1; i > 1; i--) {
+                        TableRow row = (TableRow) mBorderLeftTableLayout.getChildAt(i);
+                        ImageView imageview = (ImageView) row.getChildAt(0);
+                        imageview.setBackgroundResource(R.color.red);
+
+                        row = (TableRow) mBorderRightTableLayout.getChildAt(i);
+                        imageview = (ImageView) row.getChildAt(0);
+                        imageview.setBackgroundResource(R.color.red);
+                    }
+                    break;
+            }
+
+         /*   mBorderLeftTableLayout = (TableLayout) v.findViewById(R.id.border_left_tablelayout);
+            mBorderRightTableLayout = (TableLayout) v.findViewById(R.id.border_right_tablelayout);*/
+          //  if (mGameLogic.getGameMode().equals("openImage")) {
+           /* if (mGameMode.equals("openImage")) {
+                for (int i = mBorderLeftTableLayout.getChildCount() - 1; i > 1; i--) {
+                    TableRow row = (TableRow) mBorderLeftTableLayout.getChildAt(i);
+                    ImageView imageview = (ImageView) row.getChildAt(0);
+                    imageview.setBackgroundResource(R.color.red);
+
+                    row = (TableRow) mBorderRightTableLayout.getChildAt(i);
+                    imageview = (ImageView) row.getChildAt(0);
+                    imageview.setBackgroundResource(R.color.red);
+                }
+            }*/
+
+         /*   mBorderRightTableLayout = (TableLayout) v.findViewById(R.id.border_right_tablelayout);
+            for (int i = mBorderRightTableLayout.getChildCount()-1; i > 1; i--) {
+                TableRow row = (TableRow) mBorderRightTableLayout.getChildAt(i);
+                ImageView imageview = (ImageView) row.getChildAt(0);
+                imageview.setBackgroundResource(R.color.red);
+            }*/
+
 
             mSpeedTextView = (TextView) v.findViewById(R.id.speed_textView);
             mScoreTextView = (TextView) v.findViewById(R.id.score_textView);
             mLevelTextView = (TextView) v.findViewById(R.id.level_textView);
-            mNickNameTextView = (TextView) v.findViewById(R.id.nickNameTextView);
+            mNickNameTextView = (TextView) v.findViewById(R.id.nickName_textView);
+            mGameOverTextView = (TextView) v.findViewById(R.id.game_over_textView);
+            mGameWinTextView = (TextView) v.findViewById(R.id.game_win_textView);
+            mLevelUpTextView = (TextView) v.findViewById(R.id.level_up_textView);
 
             mSpeedMinus = (ImageButton)v.findViewById(R.id.imageButtonSpeedMinus);
             mSpeedPlus = (ImageButton)v.findViewById(R.id.imageButtonSpeedPlus);
@@ -140,7 +215,7 @@ public class GameUIFragment extends Fragment{
                             resultX = endPointX - startPointX;
                             resultY = endPointY - startPointY;
 
-                            if (Math.abs(resultX) > 20.0) {
+                            if (Math.abs(resultX) > 30.0f) {
                                 isMove = true;
                                 isMoveDown = false;
                                 if (resultX < 0) {
@@ -154,7 +229,7 @@ public class GameUIFragment extends Fragment{
                                 resultX = 0;
                             }
                             else {
-                                if (Math.abs(resultY) > 80.0) {
+                                if (Math.abs(resultY) > 80.0f) {
                                     isMove = true;
                                     if (resultY > 0) isMoveDown = true;
                                     startPointY = endPointY;
@@ -214,7 +289,7 @@ public class GameUIFragment extends Fragment{
             }
             else {
                 loadGame();
-                startGame();
+            //    startGame();
             }
 
             return v;
@@ -232,10 +307,10 @@ public class GameUIFragment extends Fragment{
                 switch (titleOnButton) {
                     case "continue":
                         loadGame();
-                        startGame();
+                   //     startGame();
                         break;
                     case "new_game":
-                        newGame();
+                        newGame(1);
                         break;
                 }
             }
@@ -280,7 +355,7 @@ public class GameUIFragment extends Fragment{
                         mIsPause = false;
                         break;
                     case "new_game":
-                        newGame();
+                        newGame(1);
                         mIsPause = false;
                         break;
                     case "records":
@@ -293,13 +368,46 @@ public class GameUIFragment extends Fragment{
                         startActivity(j);
                         mIsPause = false;
                         break;
-                    case "exit":
+                    case "main_menu":
                         getActivity().onBackPressed();
                         mIsPause = false;
                         break;
 
 
 
+                }
+            }
+
+            if (requestCode == REQUEST_ACTION_IN_WINIMAGE_DIALOG) {
+                String push_on_image = (String) intent
+                        .getSerializableExtra(WinImageDialog.EXTRA_WINIMAGE_PUSH_ON_IMAGE);
+
+                if (push_on_image.equals("level_up")) {
+                    if (mGameLogic.getLevel() < mMaxLevelCount) {
+                        int mNextLevel = (mGameLogic.getLevel() + 1);
+                      //  mGameLogic.setLevel(mNextLevel);
+
+                        newGame(mNextLevel);
+
+                       /* mGameLogic.clearGameField();
+                        draw();
+
+                        mLevelUpTextView.setVisibility(View.VISIBLE);
+                        String text = getString(R.string.Level_up) + " " + mNextLevel;
+                        mLevelUpTextView.setText(text);
+                        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                                R.animator.win_text_view_anim);
+                        set.setTarget(mLevelUpTextView);
+                        set.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                newGame();
+                                mGameLogic.setLevel(mNextLevel);
+                            }
+                        });
+                        set.start();*/
+                    }
                 }
             }
         }
@@ -340,41 +448,164 @@ public class GameUIFragment extends Fragment{
                 mTimer.cancel();
                 mTimer = null;
             }
-            mSpeedTextView.setText(R.string.Game_over);
-            if (mGameLogic.isTopTenResult()) {
+
+            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                    R.animator.game_over_text_view_anim);
+            set.setTarget(mGameOverTextView);
+
+            switch (mGameMode) {
+                case "classic":
+                    mGameOverTextView.setVisibility(View.VISIBLE);
+
+                    set.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            if (mGameLogic.isTopTenResult()) {
+                                if (mNickName.equals(getString(R.string.PLAYER))) inputNickNameForTableOfRecords();
+                                else {
+                                    if (mGameLogic.updateTableOfRecords(mNickName)) updateTop10Dialog();
+                                    else top10Dialog();
+                                }
+                            }
+                        }
+                    });
+                    set.start();
+
+                   /* if (mGameLogic.isTopTenResult()) {
+                        if (mNickName.equals(getString(R.string.PLAYER))) inputNickNameForTableOfRecords();
+                        else {
+                            if (mGameLogic.updateTableOfRecords(mNickName)) updateTop10Dialog();
+                            else top10Dialog();
+                        }
+                    }*/
+                    break;
+                case "openImage":
+                    if (!mGameLogic.isWin()) {
+                        mGameOverTextView.setVisibility(View.VISIBLE);
+                        set.start();
+                    }
+                    else {
+                        mGameWinTextView.setVisibility(View.VISIBLE);
+                        set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                                R.animator.win_text_view_anim);
+                        set.setTarget(mGameWinTextView);
+                        set.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                winImageDialog();
+                            }
+                        });
+                        set.start();
+                        //  winImageDialog();
+                    }
+                    break;
+            }
+          /*  if (mGameLogic.isTopTenResult()) {
                 if (mNickName.equals(getString(R.string.PLAYER))) inputNickNameForTableOfRecords();
                 else {
                     if (mGameLogic.updateTableOfRecords(mNickName)) updateTop10Dialog();
                     else top10Dialog();
                 }
-            }
+            }*/
         }
+
+    private void winImageDialog() {
+        FragmentManager fm = getFragmentManager();
+        WinImageDialog dialog = WinImageDialog.newInstance(mGameLogic.getLevel());
+        dialog.setTargetFragment(GameUIFragment.this, REQUEST_ACTION_IN_WINIMAGE_DIALOG);
+        dialog.setCancelable(false);
+        dialog.show(fm, DIALOG_WINIMAGE);
+    }
 
  /*   private void levelUp() {}*/
 
-        private void newGame() {
+        private void newGame(int level) {
+            if (mTimer != null) {
+                mTimer.cancel();
+                mTimer = null;
+            }
+
+            this.mCurrLevel = level;
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             mNickName = sharedPreferences.getString("NickName", getString(R.string.PLAYER));
             mNickNameTextView.setText(mNickName);
 
-            mGameLogic.newGame();
-            startTimer();
+            mGameOverTextView.setVisibility(View.INVISIBLE);
+
+            mGameLogic.clearGameField();
+            mThingTextView.setText("");
+            mLevelTextView.setText("");
+            mScoreTextView.setText("");
+            mSpeedTextView.setText("");
+            draw();
+
+         /*   if (mGameMode.equals("openImage")) {
+                for (int i = mBorderLeftTableLayout.getChildCount() - 1; i > 1; i--) {
+                    TableRow row = (TableRow) mBorderLeftTableLayout.getChildAt(i);
+                    ImageView imageview = (ImageView) row.getChildAt(0);
+                    imageview.setBackgroundResource(R.color.red);
+
+                    row = (TableRow) mBorderRightTableLayout.getChildAt(i);
+                    imageview = (ImageView) row.getChildAt(0);
+                    imageview.setBackgroundResource(R.color.red);
+                }
+            }*/
+
+            mLevelUpTextView.setVisibility(View.VISIBLE);
+            String text = getString(R.string.Level_up) + " " + mCurrLevel;
+            mLevelUpTextView.setText(text);
+            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                    R.animator.win_text_view_anim);
+            set.setTarget(mLevelUpTextView);
+            set.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    mGameLogic.newGame(mCurrLevel);
+                    startTimer();
+                }
+            });
+            set.start();
+
+          /*  mGameLogic.newGame();
+            startTimer();*/
         }
 
         public void saveGame() {
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            editSharedPreferences(mGameLogic.getScore(), mGameLogic.getSpeed(),
+                    mGameLogic.getLevel());
+
+       /*     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            int maxLevelForOpenImageMode = sharedPreferences.getInt("MaxLevelForOpenImageMode", 1);
+
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putString("NickName", mNickName);
-            edit.putInt("Score", mGameLogic.getScore());
-            edit.putInt("Speed", mGameLogic.getSpeed());
-            edit.apply();
+            if(mGameMode.equals("classic")) {
+                edit.putInt("Score_Classic", mGameLogic.getScore());
+                edit.putInt("Speed_Classic", mGameLogic.getSpeed());
+                edit.putInt("Level_Classic", mGameLogic.getLevel());
+
+            }
+            else {
+                edit.putInt("Score_openImage", mGameLogic.getScore());
+                edit.putInt("Speed_openImage", mGameLogic.getSpeed());
+                edit.putInt("Level_openImage", mGameLogic.getLevel());
+                if (mGameLogic.getLevel() > maxLevelForOpenImageMode) {
+                    edit.putInt("maxLevelForOpenImageMode", mGameLogic.getLevel());
+                }
+            }
+            edit.apply();*/
 
             try {
-                if (mGameLogic.saveGameField(mGameLogic.getListFallenFigures())) {
-                    //   Toast.makeText(getActivity(), "SAVE IS OK!", Toast.LENGTH_SHORT).show();
+                if (!mGameLogic.saveGameField(mGameLogic.getListFallenFigures())) {
+                    Toast.makeText(getActivity(), "NO SAVE", Toast.LENGTH_SHORT).show();
                 }
-                else  Toast.makeText(getActivity(), "NO SAVE", Toast.LENGTH_SHORT).show();
+              /*  else {
+                    //   Toast.makeText(getActivity(), "SAVE IS OK!", Toast.LENGTH_SHORT).show();
+                }/*
               /*  mSaveOrLoadGame.saveGameField(mGameLogic.getFixedBlocks());
                 Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();*/
             }catch (Exception e) {
@@ -399,23 +630,46 @@ public class GameUIFragment extends Fragment{
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             mNickName = sharedPreferences.getString("NickName", getString(R.string.PLAYER));
             mNickNameTextView.setText(mNickName);
-            mGameLogic.setScore(sharedPreferences.getInt("Score", 0));
-            mGameLogic.setSpeed(sharedPreferences.getInt("Speed", 1));
-
-            try {
-                if(mGameLogic.loadGameField()) {
-              //      Toast.makeText(getActivity(), "LOAD IS OK!", Toast.LENGTH_SHORT).show();
-                }
-                else  Toast.makeText(getActivity(), "NO LOAD", Toast.LENGTH_SHORT).show();
-           //     mGameLogic.setFixedBlocks(mSaveOrLoadGame.loadGameField());
-
-           //     Toast.makeText(getActivity(), "LOAD IS OK!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
-            }catch (Exception e) {
-                Toast.makeText(getActivity(), "Error LOAD GAME", Toast.LENGTH_SHORT).show();
+            if(mGameMode.equals("classic")) {
+                mGameLogic.setScore(sharedPreferences.getInt("Score_Classic", 0));
+                mGameLogic.setSpeed(sharedPreferences.getInt("Speed_Classic", 1));
+                mGameLogic.setLevel(sharedPreferences.getInt("Level_Classic", 1));
             }
-        }
+            else {
+                mGameLogic.setScore(sharedPreferences.getInt("Score_openImage", 0));
+                mGameLogic.setSpeed(sharedPreferences.getInt("Speed_openImage", 1));
+                mGameLogic.setLevel(sharedPreferences.getInt("Level_openImage", 1));
+            }
 
-        private void backToMenu() {}
+            mGameLogic.clearGameField();
+            draw();
+
+            mLevelUpTextView.setVisibility(View.VISIBLE);
+            String text = getString(R.string.Level_up) + " " + mGameLogic.getLevel();
+            mLevelUpTextView.setText(text);
+            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(getActivity(),
+                    R.animator.win_text_view_anim);
+            set.setTarget(mLevelUpTextView);
+            set.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    try {
+                        if(mGameLogic.loadGameField()) {
+                            startGame();
+                            //      Toast.makeText(getActivity(), "LOAD IS OK!", Toast.LENGTH_SHORT).show();
+                        }
+                        else  Toast.makeText(getActivity(), "NO LOAD", Toast.LENGTH_SHORT).show();
+                        //     mGameLogic.setFixedBlocks(mSaveOrLoadGame.loadGameField());
+
+                        //     Toast.makeText(getActivity(), "LOAD IS OK!!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
+                    }catch (Exception e) {
+                        Toast.makeText(getActivity(), "Error LOAD GAME", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            set.start();
+        }
 
         private void inputNickName() {
             if(!mGameLogic.getEndOfGame()) {
@@ -483,9 +737,11 @@ public class GameUIFragment extends Fragment{
         private void draw() {
 
             for (int i = 0; i < mNextFigureGameField.length; i++) {
-                for (int j = 0; j < mNextFigureGameField[i].length; j++) {
+                System.arraycopy(mGameLogic.getNextFigureGameField()[i], 0, mNextFigureGameField[i], 0, mNextFigureGameField[i].length);
+                // ручное копирование массива заменено системным
+              /*  for (int j = 0; j < mNextFigureGameField[i].length; j++) {
                     mNextFigureGameField[i][j] = mGameLogic.getNextFigureGameField()[i][j];
-                }
+                }*/
             }
 
             for (int i = 0; i < mNextFigureTableLayout.getChildCount(); i++) {
@@ -498,19 +754,23 @@ public class GameUIFragment extends Fragment{
                             break;
                         case R.color.green:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.green);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_green);
+                        //    imageview.setBackgroundResource(R.color.green);
                             break;
                         case R.color.yellow:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.yellow);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_yellow);
+                          //  imageview.setBackgroundResource(R.color.yellow);
                             break;
                         case R.color.blue:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.blue);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_blue);
+                          //  imageview.setBackgroundResource(R.color.blue);
                             break;
                         case R.color.purple:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.purple);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_purple);
+                        //    imageview.setBackgroundResource(R.color.purple);
                             break;
                         default:
                             imageview.setVisibility(View.INVISIBLE);
@@ -520,9 +780,11 @@ public class GameUIFragment extends Fragment{
             }
 
             for (int i = 0; i < mGameField.length; i++) {
-                for (int j = 0; j < mGameField[i].length; j++) {
+                System.arraycopy(mGameLogic.getGameField()[i], 0, mGameField[i], 0, mGameField[i].length);
+                // ручное копирование массива заменено системным
+              /*  for (int j = 0; j < mGameField[i].length; j++) {
                     mGameField[i][j] = mGameLogic.getGameField()[i][j];
-                }
+                }*/
             }
 
             for (int i = 0; i < mGameFieldTableLayout.getChildCount(); i++) {
@@ -531,23 +793,33 @@ public class GameUIFragment extends Fragment{
                     ImageView imageview = (ImageView) row.getChildAt(j);
                     switch (mGameField[i][j]) {
                         case 0:
-                            imageview.setVisibility(View.INVISIBLE);
+                            if (mGameMode.equals("openImage")) {
+                                if (mGameLogic.getFullLinesForOpenImage()[i] != 1) {
+                                    imageview.setVisibility(View.VISIBLE);
+                                    imageview.setBackgroundResource(R.color.background_game_field);
+                                }
+                                else imageview.setVisibility(View.INVISIBLE);
+                            } else imageview.setVisibility(View.INVISIBLE);
                             break;
                         case R.color.green:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.green);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_green);
+                         //   imageview.setBackgroundResource(R.color.green);
                             break;
                         case R.color.yellow:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.yellow);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_yellow);
+                         //   imageview.setBackgroundResource(R.color.yellow);
                             break;
                         case R.color.blue:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.blue);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_blue);
+                         //   imageview.setBackgroundResource(R.color.blue);
                             break;
                         case R.color.purple:
                             imageview.setVisibility(View.VISIBLE);
-                            imageview.setBackgroundResource(R.color.purple);
+                            imageview.setBackgroundResource(R.drawable.shape_shadowed_purple);
+                          //  imageview.setBackgroundResource(R.color.purple);
                             break;
                         default:
                             imageview.setVisibility(View.INVISIBLE);
@@ -555,6 +827,35 @@ public class GameUIFragment extends Fragment{
                     }
                 }
             }
+
+          //  if (mGameLogic.getGameMode().equals("openImage")) {
+            if (mGameMode.equals("openImage")) {
+             /*   int index = 0;
+                for (int line : mGameLogic.getFullLinesForOpenImage()) {
+                    if (line == 1) index++;
+                }
+                int lastLines = (mGameLogic.getLevel() + 6) - index;
+                mThingTextView.setText("" + lastLines);*/
+
+              //  for (int i = 0; i < mBorderLeftTableLayout.getChildCount(); i++) {
+                for (int i = mBorderLeftTableLayout.getChildCount() - 1; i > 1; i--) {
+                    TableRow row_leftBorder = (TableRow) mBorderLeftTableLayout.getChildAt(i);
+                    ImageView imageview = (ImageView) row_leftBorder.getChildAt(0);
+                    if (mGameLogic.getFullLinesForOpenImage()[i] == 1) {
+                        imageview.setBackgroundResource(R.color.green);
+                    }
+                    else imageview.setBackgroundResource(R.color.red);
+
+                    TableRow row_rightBorder = (TableRow) mBorderRightTableLayout.getChildAt(i);
+                    imageview = (ImageView) row_rightBorder.getChildAt(0);
+                    if (mGameLogic.getFullLinesForOpenImage()[i] == 1) {
+                        imageview.setBackgroundResource(R.color.green);
+                    }
+                    else imageview.setBackgroundResource(R.color.red);
+                }
+            }
+
+
         }
 
         private void startTimer() {
@@ -575,9 +876,28 @@ public class GameUIFragment extends Fragment{
                         public void run() {
                             draw();
 
-                            mLevelTextView.setText("" + mGameLogic.getLevel());
+                            if (mGameMode.equals("openImage")) {
+                                int index = 0;
+                                for (int line : mGameLogic.getFullLinesForOpenImage()) {
+                                    if (line == 1) index++;
+                                }
+
+                                int lastLines = (mGameLogic.getLevel() + 6) - index;
+                                String text = "" + lastLines;
+                                if (lastLines >= 0) mThingTextView.setText(text);
+                                else  mThingTextView.setText("0");
+                            }
+
+                            String text = "" + mGameLogic.getLevel();
+                            mLevelTextView.setText(text);
+                            text = "" + mGameLogic.getScore();
+                            mScoreTextView.setText(text);
+                            text = "" + mGameLogic.getSpeed();
+                            mSpeedTextView.setText(text);
+
+                         /*   mLevelTextView.setText("" + mGameLogic.getLevel());
                             mScoreTextView.setText("" + mGameLogic.getScore());
-                            mSpeedTextView.setText("" + mGameLogic.getSpeed());
+                            mSpeedTextView.setText("" + mGameLogic.getSpeed());*/
 
                             if (mGameLogic.getEndOfGame()) stopGame();
                         }
@@ -586,6 +906,33 @@ public class GameUIFragment extends Fragment{
                 }
             }, 0,  mTimeInterval);
         }
+
+    private void editSharedPreferences(int score, int speed, int level) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int maxLevelForOpenImageMode = sharedPreferences.getInt("MaxLevelForOpenImageMode", 1);
+
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("NickName", mNickName);
+
+        if(mGameMode.equals("classic")) {
+            edit.putInt("Score_Classic", score);
+            edit.putInt("Speed_Classic", speed);
+            edit.putInt("Level_Classic", level);
+
+        }
+        else {
+            edit.putInt("Score_openImage", score);
+            edit.putInt("Speed_openImage", speed);
+            edit.putInt("Level_openImage", level);
+
+            if (mGameLogic.getLevel() > maxLevelForOpenImageMode) {
+                edit.putInt("maxLevelForOpenImageMode", mGameLogic.getLevel());
+            }
+
+        }
+        edit.apply();
+    }
+
 
         @Override
         public void onPause() {
@@ -599,12 +946,33 @@ public class GameUIFragment extends Fragment{
             if (mGameLogic.getEndOfGame()) {
               //  mSaveOrLoadGame.deleteSavedGame();
                 mGameLogic.deleteAllRowsInTableGameField();
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                mGameLogic.deleteAllRowsInTableBorderGameField();
+                editSharedPreferences(0, 1, 1);
+
+            /*    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                int maxLevelForOpenImageMode = sharedPreferences.getInt("MaxLevelForOpenImageMode", 1);
+
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putString("NickName", mNickName);
-                edit.putInt("Score", 0);
-                edit.putInt("Speed", 1);
-                edit.apply();
+
+                if(mGameMode.equals("classic")) {
+                    edit.putInt("Score_Classic", 0);
+                    edit.putInt("Speed_Classic", 1);
+                    edit.putInt("Level_Classic", 1);
+
+                }
+                else {
+                    edit.putInt("Score_openImage", 0);
+                    edit.putInt("Speed_openImage", 1);
+                    edit.putInt("Level_openImage", 1);
+
+                    if (mGameLogic.getLevel() > maxLevelForOpenImageMode) {
+                        edit.putInt("maxLevelForOpenImageMode", mGameLogic.getLevel());
+                    }
+
+                }
+                edit.apply();*/
+
             }
             else saveGame();
         }
@@ -619,7 +987,6 @@ public class GameUIFragment extends Fragment{
                 Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             }*/
         }
-
 
 }
 

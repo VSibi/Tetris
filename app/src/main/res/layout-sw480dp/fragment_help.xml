@@ -21,7 +21,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/helpBackImageButton"
+            android:id="@+id/help_back_ImageButton"
             android:layout_gravity="left|center"
             android:layout_marginLeft="10dp"
             android:background="@android:drawable/ic_menu_revert" />

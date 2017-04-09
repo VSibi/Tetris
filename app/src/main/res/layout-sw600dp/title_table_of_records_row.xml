@@ -8,20 +8,20 @@
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="23sp"
+        android:textSize="25sp"
         android:minHeight="45dp" />
     <TextView style="@style/BlockTableOfRecords"
         android:text="@string/Nick"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="23sp"
+        android:textSize="25sp"
         android:minHeight="45dp" />
     <TextView style="@style/BlockTableOfRecords"
         android:text="@string/Score"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:layout_margin="1dp"
-        android:textSize="23sp"
+        android:textSize="25sp"
         android:minHeight="45dp" />
 </TableRow>

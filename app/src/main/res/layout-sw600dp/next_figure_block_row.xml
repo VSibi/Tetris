@@ -4,16 +4,16 @@
     android:layout_height="0dp">
 
     <ImageView style="@style/NextFigureBlockGameField"
-        android:minHeight="26dp"
+        android:minHeight="28dp"
         android:layout_margin="1dp" />
     <ImageView style="@style/NextFigureBlockGameField"
-        android:minHeight="26dp"
+        android:minHeight="28dp"
         android:layout_margin="1dp" />
     <ImageView style="@style/NextFigureBlockGameField"
-        android:minHeight="26dp"
+        android:minHeight="28dp"
         android:layout_margin="1dp" />
     <ImageView style="@style/NextFigureBlockGameField"
-        android:minHeight="26dp"
+        android:minHeight="28dp"
         android:layout_margin="1dp" />
 
 </TableRow>

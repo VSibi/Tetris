@@ -13,8 +13,15 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
 
-        <item name="android:background">@color/background_game_field</item>
+    <!--    <item name="android:background">@color/background_game_field</item> -->
 
+    </style>
+
+    <style name="BlockBorder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/border_line</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
     <style name="NextFigureBlockGameField">
@@ -30,7 +37,7 @@
         <item name="android:layout_weight">1</item>
 
         <item name="android:text">" "</item>
-        <item name="android:textColor">@color/text_table_of_records</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/background_game_field</item>
 
     </style>

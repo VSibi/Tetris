@@ -13,8 +13,7 @@
         <FrameLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -35,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nickNameTextView"
+                    android:id="@+id/nickName_textView"
                     android:text="@string/PLAYER"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginBottom="3dp"
@@ -69,7 +68,6 @@
                 android:id="@+id/score_textView"
                 android:layout_gravity="center"
                 android:textSize="17sp"
-                android:text="0"
                 android:textColor="@android:color/primary_text_light" />
 
         </FrameLayout>
@@ -131,7 +129,22 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="top|center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/thing_title_textView"
+                        android:text="@string/Thing"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/thing_textView"
+                        android:textSize="17sp"
+                        android:textColor="@android:color/primary_text_light" />
                 </LinearLayout>
 
 
@@ -145,26 +158,247 @@
                 android:layout_weight="64"
                 android:layout_gravity="center">
 
-                <ImageView
+
+          <!--      <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView"
                     android:layout_gravity="left"
                     android:background="@drawable/border_line"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp" /> -->
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/border_left_tablelayout"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="left">
 
-                <ImageView
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+
+
+                </TableLayout>
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/border_right_tablelayout"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="right">
+
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+                    <include
+                        layout="@layout/block_row_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1" />
+
+
+                </TableLayout>
+
+              <!--  <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView2"
                     android:layout_gravity="right"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/border_line" />
+                    android:background="@drawable/border_line" /> -->
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView3"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/border_line" />
@@ -175,10 +409,10 @@
                     android:id="@+id/game_field_tablelayout"
                     android:layout_gravity="top|center"
                     android:stretchColumns="*"
-                    android:background="@color/material_deep_teal_200"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/background_game_field">
 
                     <include
                         layout="@layout/block_row"
@@ -286,10 +520,12 @@
 
 
 
-
                 </TableLayout>
 
+
             </FrameLayout>
+
+
 
             <LinearLayout
                 android:orientation="vertical"
@@ -304,22 +540,25 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageButtonSpeedPlus"
-                        android:src="@drawable/speed_plus" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Speed"
                         android:textColor="@color/colorAccent" />
 
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButtonSpeedPlus"
+                        android:src="@drawable/button_speed_plus"
+                        android:background="@android:color/transparent"
+                        android:layout_margin="5dp" />
+
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
                         android:id="@+id/speed_textView"
                         android:textSize="17sp"
                         android:gravity="center"
@@ -329,7 +568,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageButtonSpeedMinus"
-                        android:src="@drawable/speed_min" />
+                        android:src="@drawable/button_speed_min"
+                        android:background="@android:color/transparent"
+                        android:layout_margin="5dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -348,12 +589,51 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15"
                         android:id="@+id/level_textView"
                         android:textSize="17sp"
                         android:textColor="@android:color/primary_text_light" />
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Game_over"
+        android:layout_gravity="top|center"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:layout_marginTop="150dp"
+        android:id="@+id/game_over_textView"
+        android:visibility="invisible"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/You_win"
+        android:layout_gravity="top|center"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="35sp"
+        android:layout_marginTop="150dp"
+        android:id="@+id/game_win_textView"
+        android:visibility="invisible"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:gravity="center"
+        android:textColor="@color/green"
+        android:textSize="35sp"
+        android:layout_marginTop="150dp"
+        android:id="@+id/level_up_textView"
+        android:visibility="invisible"
+        android:textStyle="bold|italic" />
+
 </FrameLayout>
